@@ -9,5 +9,14 @@ namespace TurkishLocalFlavors.DataAccess.Abstract
 {
     public interface IProductDal : IGenericDal<Product>
     {
+        List<Product> GetProductsWithCategories();
+
+        int ProductCount();
+        int ProductCountByKebab();
+        int ProductCountByDrink();
+        decimal ProductPriceAvg();
+        string ProductNameByMaxPrice();
+        string ProductNameByMinPrice();
+
     }
 }

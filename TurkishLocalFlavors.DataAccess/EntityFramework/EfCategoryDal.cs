@@ -15,5 +15,23 @@ namespace TurkishLocalFlavors.DataAccess.EntityFramework
         public EfCategoryDal(FlavorsContext db) : base(db)
         {
         }
+
+        public int ActiveCategoryCount()
+        {
+            using var context = new FlavorsContext();
+            return context.Categories.Where(x=>x.Status==true).Count();
+        }
+
+        public int CategoryCount()
+        {
+            using var context=new FlavorsContext();
+            return context.Categories.Count();
+        }
+
+        public int PassiveCategoryCount()
+        {
+            using var context = new FlavorsContext();
+            return context.Categories.Where(x => x.Status == false).Count();
+        }
     }
 }

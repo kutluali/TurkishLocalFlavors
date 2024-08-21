@@ -26,5 +26,7 @@ namespace TurkishLocalFlavors.DataAccess.Concrete
         public DbSet<Testimonial> Testimonials { get; set; }
         public DbSet<MenuTable> MenuTables { get; set; }
         public DbSet<Message> Messages { get; set; }
+        public DbSet<Order> Orders { get; set; }    
+        public DbSet<OrderDetail> OrderDetails { get; set; }
     }
 }

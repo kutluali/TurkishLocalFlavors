@@ -9,5 +9,14 @@ namespace TurkishLocalFlavors.Business.Abstract
 {
     public interface IProductService : IGenericService<Product>
     {
+        List<Product> TGetProductsWithCategories();
+
+        int TProductCount();
+        int TProductCountByDrink();
+        int TProductCountByKebab();
+        decimal TProductPriceAvg();
+        string TProductNameByMaxPrice();
+        string TProductNameByMinPrice();
+
     }
 }

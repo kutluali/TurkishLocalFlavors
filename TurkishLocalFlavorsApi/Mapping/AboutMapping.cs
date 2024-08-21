@@ -5,7 +5,7 @@ namespace TurkishLocalFlavorsApi.Mapping
 {
     public class AboutMapping : Profile
     {
-        protected AboutMapping()
+        public AboutMapping()
         {
             CreateMap<AboutMapping, ResultAboutDto>().ReverseMap();
             CreateMap<AboutMapping, CreateAboutDto>().ReverseMap();

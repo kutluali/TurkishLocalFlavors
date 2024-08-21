@@ -38,6 +38,41 @@ namespace TurkishLocalFlavors.Business.Concrete
             return _productDal.GetListAll();
         }
 
+        public List<Product> TGetProductsWithCategories()
+        {
+            return _productDal.GetProductsWithCategories();
+        }
+
+        public int TProductCount()
+        {
+           return _productDal.ProductCount();
+        }
+
+        public int TProductCountByDrink()
+        {
+            return _productDal.ProductCountByDrink();
+        }
+
+        public int TProductCountByKebab()
+        {
+            return _productDal.ProductCountByKebab();
+        }
+
+        public string TProductNameByMaxPrice()
+        {
+            return _productDal.ProductNameByMaxPrice();
+        }
+
+        public string TProductNameByMinPrice()
+        {
+            return _productDal.ProductNameByMinPrice();
+        }
+
+        public decimal TProductPriceAvg()
+        {
+            return _productDal.ProductPriceAvg();
+        }
+
         public void TUpdate(Product entity)
         {
             _productDal.Update(entity);

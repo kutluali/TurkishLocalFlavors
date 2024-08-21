@@ -1,0 +1,52 @@
+﻿@model UpdateTestimonialDto
+@{
+    ViewData["Title"] = "UpdateTestimonial";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="content">
+    <div class="container-fluid">
+        <h4 class="page-title">Müşteri Yorum İşlemleri</h4>
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Yeni Müşteri Yorumu Ekleme Sayfası</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <input type="hidden" asp-for="TestimonialID" />
+                                <label for="Name">Müşteri Adını Giriniz</label>
+                                <input type="text" class="form-control" asp-for="Name" id="Name"><br />
+                                <label for="Title">Müşteri Ünvanını Giriniz</label>
+                                <input type="text" class="form-control" asp-for="Title" id="Title"><br />
+
+                                <label for="ImageUrl">Müşteri Resim Dosya Yolunu Giriniz</label>
+                                <input type="text" class="form-control" asp-for="ImageUrl" id="ImageUrl"><br />
+
+                                <label for="Comment">Müşteri Yorumunu Giriniz</label>
+                                <input type="text" class="form-control" asp-for="Comment" id="Comment"><br />
+
+                                <label>Yorum Görünür mü ?</label><br />
+                                <label class="form-radio-label">
+                                    <input class="form-radio-input" type="radio" name="optionsRadios" asp-for="Status" value="true" checked="">
+                                    <span class="form-radio-sign">Evet</span>
+                                </label>
+                                <label class="form-radio-label ml-3">
+                                    <input class="form-radio-input" type="radio" name="optionsRadios" asp-for="Status" value="false">
+                                    <span class="form-radio-sign">Hayır</span>
+                                </label><br />
+                            </div>
+
+                            <div class="card-action">
+                                <button class="btn btn-primary">Yorumu Güncelle</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

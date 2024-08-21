@@ -4,7 +4,7 @@ using TurkishLocalFlavors.Entity.Entities;
 
 namespace TurkishLocalFlavorsApi.Mapping
 {
-    public class CategoryMapping :Profile
+    public class CategoryMapping:Profile
     {
         public CategoryMapping()
         {
@@ -12,6 +12,7 @@ namespace TurkishLocalFlavorsApi.Mapping
             CreateMap<Category, CreateCategoryDto>().ReverseMap();
             CreateMap<Category, GetCategoryDto>().ReverseMap();
             CreateMap<Category, UpdateCategoryDto>().ReverseMap();
+
         }
     }
 }

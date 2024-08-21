@@ -33,13 +33,14 @@ namespace TurkishLocalFlavorsApi.Controllers
                 Name=createBookingDto.Name, 
                 PersonCount=createBookingDto.PersonCount,   
                 Phone=createBookingDto.Phone,
+                Description = createBookingDto.Description
             };
             _bookingService.TAdd(booking);
             return Ok("Rezervasyon Alındı");
 
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public IActionResult DeleteBooking(int id)
         {
             var values = _bookingService.TGetByID(id);
@@ -58,12 +59,13 @@ namespace TurkishLocalFlavorsApi.Controllers
                 Name = updateBookingDto.Name,
                 PersonCount = updateBookingDto.PersonCount,
                 Phone = updateBookingDto.Phone,
+                Description = updateBookingDto.Description
             };
             _bookingService.TUpdate(booking);
             return Ok("Rezervasyon Güncellendi");
         }
 
-        [HttpGet("GetBooking")]
+        [HttpGet("{id}")]
         public IActionResult GetBooking(int id)
         {
             var values = _bookingService.TGetByID(id);
