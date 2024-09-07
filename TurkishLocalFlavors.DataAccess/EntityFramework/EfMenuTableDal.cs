@@ -15,5 +15,10 @@ namespace TurkishLocalFlavors.DataAccess.EntityFramework
         public EfMenuTableDal(FlavorsContext db) : base(db)
         {
         }
+        public int MenuTableCount()
+        {
+            using var context = new FlavorsContext();
+            return context.MenuTables.Count();
+        }
     }
 }

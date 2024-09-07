@@ -2,7 +2,7 @@
 
 namespace TurkishLocalFlavorsUI.Controllers
 {
-    public class StatisticsController : Controller
+    public class ProgressBarController : Controller
     {
         public IActionResult Index()
         {

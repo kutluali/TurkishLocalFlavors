@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Text.Json.Serialization;
 using TurkishLocalFlavors.Business.Abstract;
 using TurkishLocalFlavors.Business.Concrete;
 using TurkishLocalFlavors.DataAccess.Abstract;
@@ -60,6 +61,27 @@ internal class Program
 
         builder.Services.AddScoped<ITestoimonialService, TestimonialManager>();
         builder.Services.AddScoped<ITestimonialDal, EfTestimonialDal>();
+
+        builder.Services.AddScoped<IOrderService, OrderManager>();
+        builder.Services.AddScoped<IOrderDal, EfOrderDal>();
+
+        builder.Services.AddScoped<IOrderDetailService, OrderDetailManager>();
+        builder.Services.AddScoped<IOrderDetailDal, EfOrderDetailDal>();
+
+        builder.Services.AddScoped<IMoneyCaseService, MoneyCaseManager>();
+        builder.Services.AddScoped<IMoneyCaseDal, EfMoneyCaseDal>();
+
+        builder.Services.AddScoped<IMenuTableService, MenuTableManager>();
+        builder.Services.AddScoped<IMenuTableDal, EfMenuTableDal>();
+
+        builder.Services.AddScoped<ISliderService, SliderManager>();
+        builder.Services.AddScoped<ISliderDal, EfSliderDal>();
+
+        builder.Services.AddScoped<IBasketService, BasketManager>();
+        builder.Services.AddScoped<IBasketDal, EfBasketDal>();
+
+        builder.Services.AddControllersWithViews()
+            .AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
         builder.Services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

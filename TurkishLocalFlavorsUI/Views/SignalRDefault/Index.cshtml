@@ -21,7 +21,7 @@
                             $("#connstatus").text(connection.state);
                             connection.start().then(() => {
                                 $("#connstatus").text(connection.state);
-                                connection.invoke("SendCategoryCount");
+                                connection.invoke("SendStatistic");
                             }).catch((err) => { console.log(err) });
 
                             connection.on("ReceiveCategoryCount", (value) => {

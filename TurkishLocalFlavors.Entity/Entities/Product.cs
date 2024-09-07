@@ -16,7 +16,8 @@ namespace TurkishLocalFlavors.Entity.Entities
         public bool ProductStatus { get; set; }
         public int CategoryID { get; set; }
         public Category Category { get; set; }
-
         public List<OrderDetail> OrderDetails { get; set; }
+        public List<Basket> Baskets { get; set; }
+
     }
 }

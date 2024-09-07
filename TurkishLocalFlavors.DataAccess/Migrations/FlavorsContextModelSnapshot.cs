@@ -47,6 +47,38 @@ namespace TurkishLocalFlavors.DataAccess.Migrations
                     b.ToTable("Abouts");
                 });
 
+            modelBuilder.Entity("TurkishLocalFlavors.Entity.Entities.Basket", b =>
+                {
+                    b.Property<int>("BasketID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BasketID"), 1L, 1);
+
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MenuTableID")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("ProductID")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("BasketID");
+
+                    b.HasIndex("MenuTableID");
+
+                    b.HasIndex("ProductID");
+
+                    b.ToTable("Baskets");
+                });
+
             modelBuilder.Entity("TurkishLocalFlavors.Entity.Entities.Booking", b =>
                 {
                     b.Property<int>("BookingID")
@@ -275,6 +307,22 @@ namespace TurkishLocalFlavors.DataAccess.Migrations
                     b.ToTable("Messages");
                 });
 
+            modelBuilder.Entity("TurkishLocalFlavors.Entity.Entities.MoneyCase", b =>
+                {
+                    b.Property<int>("MoneyCaseID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MoneyCaseID"), 1L, 1);
+
+                    b.Property<decimal>("TotalAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("MoneyCaseID");
+
+                    b.ToTable("MoneyCases");
+                });
+
             modelBuilder.Entity("TurkishLocalFlavors.Entity.Entities.Order", b =>
                 {
                     b.Property<int>("OrderID")
@@ -288,7 +336,7 @@ namespace TurkishLocalFlavors.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("OrderDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("Date");
 
                     b.Property<string>("TableNumber")
                         .IsRequired()
@@ -370,6 +418,43 @@ namespace TurkishLocalFlavors.DataAccess.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("TurkishLocalFlavors.Entity.Entities.Slider", b =>
+                {
+                    b.Property<int>("SliderID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SliderID"), 1L, 1);
+
+                    b.Property<string>("Description1")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description2")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description3")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title1")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title2")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title3")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("SliderID");
+
+                    b.ToTable("Sliders");
+                });
+
             modelBuilder.Entity("TurkishLocalFlavors.Entity.Entities.SocialMedia", b =>
                 {
                     b.Property<int>("SocialMediaID")
@@ -427,6 +512,25 @@ namespace TurkishLocalFlavors.DataAccess.Migrations
                     b.ToTable("Testimonials");
                 });
 
+            modelBuilder.Entity("TurkishLocalFlavors.Entity.Entities.Basket", b =>
+                {
+                    b.HasOne("TurkishLocalFlavors.Entity.Entities.MenuTable", "MenuTable")
+                        .WithMany("Baskets")
+                        .HasForeignKey("MenuTableID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TurkishLocalFlavors.Entity.Entities.Product", "Product")
+                        .WithMany("Baskets")
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MenuTable");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("TurkishLocalFlavors.Entity.Entities.OrderDetail", b =>
                 {
                     b.HasOne("TurkishLocalFlavors.Entity.Entities.Order", "Order")
@@ -462,6 +566,11 @@ namespace TurkishLocalFlavors.DataAccess.Migrations
                     b.Navigation("Products");
                 });
 
+            modelBuilder.Entity("TurkishLocalFlavors.Entity.Entities.MenuTable", b =>
+                {
+                    b.Navigation("Baskets");
+                });
+
             modelBuilder.Entity("TurkishLocalFlavors.Entity.Entities.Order", b =>
                 {
                     b.Navigation("OrderDetails");
@@ -469,6 +578,8 @@ namespace TurkishLocalFlavors.DataAccess.Migrations
 
             modelBuilder.Entity("TurkishLocalFlavors.Entity.Entities.Product", b =>
                 {
+                    b.Navigation("Baskets");
+
                     b.Navigation("OrderDetails");
                 });
 #pragma warning restore 612, 618

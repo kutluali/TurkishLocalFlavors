@@ -43,6 +43,11 @@ namespace TurkishLocalFlavors.Business.Concrete
             return _productDal.GetProductsWithCategories();
         }
 
+        public decimal TProductAvgPriceByKebab()
+        {
+            return _productDal.ProductAvgPriceByKebab();
+        }
+
         public int TProductCount()
         {
            return _productDal.ProductCount();
@@ -71,6 +76,21 @@ namespace TurkishLocalFlavors.Business.Concrete
         public decimal TProductPriceAvg()
         {
             return _productDal.ProductPriceAvg();
+        }
+
+        public decimal TProductPriceByMantı()
+        {
+            return _productDal.ProductPriceByMantı();
+        }
+
+        public decimal TTotalPriceByDrinkCategory()
+        {
+            return _productDal.TotalPriceByDrinkCategory();
+        }
+
+        public decimal TTotalPriceBySaladCategory()
+        {
+            return _productDal.TotalPriceBySaladCategory();
         }
 
         public void TUpdate(Product entity)

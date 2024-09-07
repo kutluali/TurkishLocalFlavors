@@ -24,6 +24,12 @@ namespace TurkishLocalFlavors.DataAccess.EntityFramework
             return values;
         }
 
+        public decimal ProductAvgPriceByKebab()
+        {
+            using var context = new FlavorsContext();
+            return context.Products.Where(x => x.CategoryID == (context.Categories.Where(y => y.CategoryName == "Kebab").Select(z => z.CategoryID).FirstOrDefault())).Average(w => w.Price);
+        }
+
         public int ProductCount()
         {
             using var context = new FlavorsContext();
@@ -59,6 +65,26 @@ namespace TurkishLocalFlavors.DataAccess.EntityFramework
             using var context =new FlavorsContext();
             return context.Products.Average(x=>x.Price); 
 
+        }
+
+        public decimal ProductPriceByMantı()
+        {
+            using var context = new FlavorsContext();
+            return context.Products.Where(x => x.ProductName == "Steak Burger").Select(y => y.Price).FirstOrDefault();
+        }
+
+        public decimal TotalPriceByDrinkCategory()
+        {
+            using var context = new FlavorsContext();
+            int id = context.Categories.Where(x => x.CategoryName == "İçecek").Select(y => y.CategoryID).FirstOrDefault();
+            return context.Products.Where(x => x.CategoryID == id).Sum(y => y.Price);
+        }
+
+        public decimal TotalPriceBySaladCategory()
+        {
+            using var context = new FlavorsContext();
+            int id = context.Categories.Where(x => x.CategoryName == "Salata").Select(y => y.CategoryID).FirstOrDefault();
+            return context.Products.Where(x => x.CategoryID == id).Sum(y => y.Price);
         }
     }
 }

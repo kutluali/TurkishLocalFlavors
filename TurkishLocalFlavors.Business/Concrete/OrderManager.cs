@@ -4,17 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TurkishLocalFlavors.Business.Abstract;
+using TurkishLocalFlavors.DataAccess.Abstract;
 using TurkishLocalFlavors.Entity.Entities;
 
 namespace TurkishLocalFlavors.Business.Concrete
 {
     public class OrderManager : IOrderService
     {
-        private readonly IOrderService _orderService;
+        private readonly IOrderDal _orderDal;
 
-        public OrderManager(IOrderService orderService)
+        public OrderManager(IOrderDal orderDal)
         {
-            _orderService = orderService;
+            _orderDal = orderDal;
+        }
+
+        public int TActiveOrderCount()
+        {
+            return _orderDal.ActiveOrderCount();
         }
 
         public void TAdd(Order entity)
@@ -35,6 +41,21 @@ namespace TurkishLocalFlavors.Business.Concrete
         public List<Order> TGetListAll()
         {
             throw new NotImplementedException();
+        }
+
+        public decimal TLastOrderPrice()
+        {
+            return _orderDal.LastOrderPrice();
+        }
+
+        public decimal TTodayTotalPrice()
+        {
+            return _orderDal.TodayTotalPrice();
+        }
+
+        public int TTotalOrderCount()
+        {
+            return _orderDal.TotalOrderCount();
         }
 
         public void TUpdate(Order entity)

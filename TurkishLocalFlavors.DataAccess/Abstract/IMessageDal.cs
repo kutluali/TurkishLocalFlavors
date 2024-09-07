@@ -9,5 +9,6 @@ namespace TurkishLocalFlavors.DataAccess.Abstract
 {
     public interface IMessageDal : IGenericDal<Message>
     {
+      
     }
 }

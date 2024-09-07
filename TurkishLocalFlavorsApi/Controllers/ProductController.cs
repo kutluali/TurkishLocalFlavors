@@ -80,6 +80,30 @@ namespace TurkishLocalFlavorsApi.Controllers
             return Ok(_productService.TProductNameByMinPrice());
         }
 
+        [HttpGet("ProductAvgPriceByKebab")]
+        public IActionResult ProductAvgPriceByKebab()
+        {
+            return Ok(_productService.TProductNameByMinPrice());
+        }
+
+        [HttpGet("TotalPriceByDrinkCategory")]
+        public IActionResult TotalPriceByDrinkCategory()
+        {
+            return Ok(_productService.TTotalPriceByDrinkCategory());
+        }
+
+        [HttpGet("TotalPriceBySaladCategory")]
+        public IActionResult TotalPriceBySaladCategory()
+        {
+            return Ok(_productService.TTotalPriceBySaladCategory());
+        }
+        
+        [HttpGet("ProductPriceByMantı")]
+        public IActionResult ProductPriceByMantı()
+        {
+            return Ok(_productService.TProductPriceByMantı());
+        }
+
 
         [HttpPost]
         public IActionResult CreateProduct(CreateProductDto createProductDto)

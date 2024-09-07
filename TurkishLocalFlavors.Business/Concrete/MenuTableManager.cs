@@ -37,6 +37,11 @@ namespace TurkishLocalFlavors.Business.Concrete
             return _menuTableDal.GetListAll();
         }
 
+        public int TMenuTableCount()
+        {
+            return _menuTableDal.MenuTableCount();
+        }
+
         public void TUpdate(MenuTable entity)
         {
             _menuTableDal.Update(entity);

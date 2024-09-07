@@ -7,7 +7,8 @@ using TurkishLocalFlavors.Entity.Entities;
 
 namespace TurkishLocalFlavors.DataAccess.Abstract
 {
-    public interface IMenuTableDal : IGenericDal<MenuTable>
+    public interface IMenuTableDal : IGenericDal<MenuTable> 
     {
+        int MenuTableCount();
     }
 }

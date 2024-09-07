@@ -17,6 +17,9 @@ namespace TurkishLocalFlavors.DataAccess.Abstract
         decimal ProductPriceAvg();
         string ProductNameByMaxPrice();
         string ProductNameByMinPrice();
-
+        decimal ProductAvgPriceByKebab();
+        decimal ProductPriceByMantı();
+        decimal TotalPriceByDrinkCategory();
+        decimal TotalPriceBySaladCategory();
     }
 }
