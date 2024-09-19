@@ -1,0 +1,49 @@
+﻿@model UserEditDto
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="content">
+    <div class="container-fluid">
+        <h4 class="page-title">Kullanıcı İşlemleri</h4>
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Kullanıcı Bilgi Güncelleme Paneli</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="categoryname">Adını Giriniz</label>
+                                <input type="text" class="form-control" asp-for="Name"><br />
+
+                                <label for="categoryname">Soyadınızı Giriniz</label>
+                                <input type="text" class="form-control" asp-for="Surname"><br />
+
+                                <label for="categoryname">Mail Adresinizi Giriniz</label>
+                                <input type="email" class="form-control" asp-for="Mail"><br />
+
+                                <label for="categoryname">Kullanıcı Adınızı Giriniz</label>
+                                <input type="text" class="form-control" asp-for="Username"><br />
+
+                                <label for="categoryname">Şifrenizi Giriniz</label>
+                                <input type="password" class="form-control" asp-for="Password"><br />
+
+                                <label for="categoryname">Şifrenizi Tekrar Giriniz</label>
+                                <input type="password" class="form-control" asp-for="ConfirmPassword"><br />
+                            </div>
+                        </div>
+                        <div class="card-action">
+                            <button class="btn btn-primary">Güncelle</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

@@ -1,83 +1,69 @@
-﻿@model List<ResultContactDto>
+﻿@model FooterViewModel
 
-@foreach (var item in Model){
+@{
+    var contact = Model.ContactValues.FirstOrDefault(); // İlk contact objesini alıyoruz
+    if (contact == null)
+    {
+        return; // Eğer contact bilgisi yoksa view'in geri kalanını çalıştırma
+    }
+}
+
 <footer class="footer_section">
     <div class="container">
         <div class="row">
+            <!-- İletişim Bölümü -->
             <div class="col-md-4 footer-col">
                 <div class="footer_contact">
-                    <h4>
-                        Bize Ulaşın
-                    </h4>
+                    <h4>Bize Ulaşın</h4>
                     <div class="contact_link_box">
-                        <a href="@item.Location">
+                        <a href="@contact.Location">
                             <i class="fa fa-map-marker" aria-hidden="true"></i>
-                            <span>
-                                Lokasyon
-                            </span>
+                            <span>Lokasyon</span>
                         </a>
-                        <a href="">
+                        <a href="tel:@contact.Phone">
                             <i class="fa fa-phone" aria-hidden="true"></i>
-                            <span>
-                                @item.Phone
-                            </span>
+                            <span>@contact.Phone</span>
                         </a>
-                        <a href="">
+                        <a href="mailto:@contact.Mail">
                             <i class="fa fa-envelope" aria-hidden="true"></i>
-                            <span>
-                               @item.Mail
-                            </span>
+                            <span>@contact.Mail</span>
                         </a>
                     </div>
                 </div>
             </div>
+
+            <!-- Footer Detayları -->
             <div class="col-md-4 footer-col">
                 <div class="footer_detail">
-                    <a href="~/Home/Index" class="footer-logo">
-                        @item.FooterTitle
-                    </a>
-                    <p>
-                       @item.FooterDescription
-                    </p>
+                    <a href="~/Home/Index" class="footer-logo">@contact.FooterTitle</a>
+                    <p>@contact.FooterDescription</p>
                     <div class="footer_social">
-                        <a href="">
-                            <i class="fa fa-facebook" aria-hidden="true"></i>
-                        </a>
-                        <a href="">
-                            <i class="fa fa-twitter" aria-hidden="true"></i>
-                        </a>
-                        <a href="">
-                            <i class="fa fa-linkedin" aria-hidden="true"></i>
-                        </a>
-                        <a href="">
-                            <i class="fa fa-instagram" aria-hidden="true"></i>
-                        </a>
-                        <a href="">
-                            <i class="fa fa-pinterest" aria-hidden="true"></i>
-                        </a>
+                        @foreach (var socialMedia in Model.SocialMediaValues)
+                        {
+                            <a href="https://@socialMedia.Url">
+                                <i class="fa fa-@socialMedia.Title" aria-hidden="true"></i>
+                            </a>
+                        }
                     </div>
                 </div>
             </div>
+
+            <!-- Açık Günler ve Saatler -->
             <div class="col-md-4 footer-col">
-                <h4>
-                    @item.OpenDays
-                </h4>
-                <p>
-                    @item.OpenDaysDescription
-                </p>
-                <p>
-                    @item.OpenHours
-                </p>
+                <h4>@contact.OpenDays</h4>
+                <p>@contact.OpenDaysDescription</p>
+                <p>@contact.OpenHours</p>
             </div>
         </div>
+
+        <!-- Footer Alt Bilgiler -->
         <div class="footer-info">
             <p>
                 &copy; <span id="displayYear"></span> Tüm Hakları Saklıdır.
                 <a href="https://html.design/">Turkish Local Flavors</a><br><br>
                 &copy; <span id="displayYear"></span> Geliştiren
-                    <a href="https://linkedin.com/kutluali" target="_blank"> Ali Kutlu </a>
+                <a href="https://linkedin.com/kutluali" target="_blank"> Ali Kutlu </a>
             </p>
         </div>
     </div>
 </footer>
-}

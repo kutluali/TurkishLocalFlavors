@@ -17,6 +17,13 @@ namespace TurkishLocalFlavors.DataAccess.EntityFramework
         {
         }
 
+        public List<Product> GetLast9Products()
+        {
+            var context = new FlavorsContext();
+            var values = context.Products.Take(9).ToList();
+            return values;
+        }
+
         public List<Product> GetProductsWithCategories()
         {
             var context = new FlavorsContext();

@@ -39,7 +39,7 @@ namespace TurkishLocalFlavorsUI.Controllers
             var client = _httpClientFactory.CreateClient();
             var jsonData = JsonConvert.SerializeObject(createBookingDto);
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var responseMessage = await client.PostAsync("https://localhost:7046/api/Booking", stringContent);
+            var responseMessage = await client.PostAsync("https://localhost:7046/api/Booking/CreateBooking", stringContent);
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index");
@@ -83,6 +83,22 @@ namespace TurkishLocalFlavorsUI.Controllers
                 return RedirectToAction("Index");
             }
             return View();
+        }
+
+        public async Task<IActionResult> BookingStatusApproved(int id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            await client.GetAsync($"https://localhost:7046/api/BookingStatusApproved/{id}");
+            
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> BookingStatusCancelled(int id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            await client.GetAsync($"https://localhost:7046/api/BookingStatusCancelled/{id}");
+
+            return RedirectToAction("Index");
         }
     }
 }

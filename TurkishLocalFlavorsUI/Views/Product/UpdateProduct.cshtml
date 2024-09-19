@@ -1,14 +1,18 @@
 ﻿@model UpdateProductDto 
 @{
+    if (Model == null)
+    {
+        <h2>Ürün bilgileri yüklenirken bir hata oluştu.</h2>
+        return;
+    }
     ViewData["Title"] = "UpdateProduct";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-
 <div class="content">
     <div class="container-fluid">
         <h4 class="page-title">Ürün İşlemleri</h4>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12 col-md-8">
                 <form method="post">
                     <div class="card">
                         <div class="card-header">
@@ -19,24 +23,29 @@
                                 <input type="hidden" asp-for="ProductID" />
                                 <label for="productname">Ürün Adını Giriniz</label>
                                 <input type="text" class="form-control" asp-for="ProductName" id="productname"><br />
+
                                 <label for="price">Ürün Fiyatını Giriniz</label>
                                 <input type="text" class="form-control" asp-for="Price" id="price"><br />
+
                                 <label for="imageurl">Ürün Görselini Giriniz</label>
-                                <input type="text" class="form-control" asp-for="ImageUrl" id="imageurl"><br />
+                                <input type="text" class="form-control" asp-for="ImageUrl" /><br />
+
                                 <label for="price">Ürün Kategorisini Seçiniz</label>
-                                @Html.DropDownListFor(x => x.CategoryID, (List<SelectListItem>)ViewBag.v, new { @class = "form-control" })<br />
+                                @Html.DropDownListFor(x => x.CategoryID, (List<SelectListItem>)ViewBag.v, new { @class = "form-control" })
+                                <span asp-validation-for="CategoryID" class="text-danger"></span><br /><br />
+
                                 <label for="description">Ürün Açıklamasını Giriniz</label>
                                 <input type="text" class="form-control" asp-for="Description" id="description"><br />
 
-                                <label>Kategori Aktif mı ?</label><br />
                                 <label class="form-radio-label">
-                                    <input class="form-radio-input" type="radio" name="optionsRadios" asp-for="ProductStatus" value="true" checked="">
+                                    <input class="form-radio-input" type="radio" asp-for="ProductStatus" value="true" />
                                     <span class="form-radio-sign">Evet</span>
                                 </label>
                                 <label class="form-radio-label ml-3">
-                                    <input class="form-radio-input" type="radio" name="optionsRadios" asp-for="ProductStatus" value="false">
+                                    <input class="form-radio-input" type="radio" asp-for="ProductStatus" value="false" />
                                     <span class="form-radio-sign">Hayır</span>
                                 </label>
+
                             </div>
                             <div class="card-action">
                                 <button class="btn btn-primary">Ürünü Güncelle</button>
@@ -44,6 +53,17 @@
                         </div>
                     </div>
                 </form>
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="card text-center" style="margin-bottom: 0;">
+                    <div class="card-title" style="margin-bottom: 0; font-size: 20px; padding: 10px 0;">
+                        Mevcut Resim
+                    </div>
+                </div>
+                <div class="card" style="margin-top: 0;">
+                    <img src="@Model.ImageUrl" alt="" style="width: 100%; max-width: 275px; display: block; margin: 0 auto;" />
+                    <input type="hidden" asp-for="@Model.ImageUrl" />
+                </div>
             </div>
         </div>
     </div>

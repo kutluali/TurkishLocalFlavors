@@ -8,10 +8,10 @@
 
 @await Component.InvokeAsync("_HomeDiscountComponentPartial");
 
-@await Component.InvokeAsync("_HomeCategoryMenuComponentPartial");
+@await Component.InvokeAsync("_HomeIndexComponentPartial");
 
 @await Component.InvokeAsync("_HomeAboutComponentPartial");
 
-@await Component.InvokeAsync("_HomeBookaTableComponentPartial");
+@await Html.PartialAsync("SendMessage.cshtml");
 
 @await Component.InvokeAsync("_HomeTestimonialComponentPartial");

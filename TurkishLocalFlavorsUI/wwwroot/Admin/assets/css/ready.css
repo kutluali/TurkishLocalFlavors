@@ -2254,13 +2254,15 @@ body {
 }
 
 .footer {
-  border-top: 1px solid #eee;
-  padding: 15px;
-  background: #ffffff;
+    border-top: 1px solid #eee;
+    padding: 15px;
+    background: #ffffff;
+    position: relative; /* Diðer içeriklerle uyumlu olmasý için */
 }
 .footer .container-fluid {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Ýçeriði iki kenara yayar */
 }
 
 .la, .la-stack {

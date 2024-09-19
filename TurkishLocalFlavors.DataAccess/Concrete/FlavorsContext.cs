@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using TurkishLocalFlavors.Entity.Entities;
 
 namespace TurkishLocalFlavors.DataAccess.Concrete
 {
-    public class FlavorsContext :DbContext
+    public class FlavorsContext :IdentityDbContext<AppUser, AppRole, int>
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -31,5 +32,6 @@ namespace TurkishLocalFlavors.DataAccess.Concrete
         public DbSet<MoneyCase> MoneyCases{ get; set; }
         public DbSet<Slider> Sliders { get; set; }
         public DbSet<Basket> Baskets { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using TurkishLocalFlavors.Business.Abstract;
 using TurkishLocalFlavors.Dto.Category;
 using TurkishLocalFlavors.Dto.Contact;
@@ -24,24 +25,15 @@ namespace TurkishLocalFlavorsApi.Controllers
         [HttpGet]
         public IActionResult ContactList()
         {
-            var value = _mapper.Map<List<ResultContactDto>>(_contactService.TGetListAll());
-            return Ok(value);
+            var value = _contactService.TGetListAll();
+            return Ok(_mapper.Map<List<ResultContactDto>>(value));
         }
 
         [HttpPost]
         public IActionResult CreateContact(CreateContactDto createContactDto)
         {
-            _contactService.TAdd(new Contact()
-            {
-                FooterDescription= createContactDto.FooterDescription,
-                FooterTitle= createContactDto.FooterTitle,
-                Location= createContactDto.Location,
-                Mail = createContactDto.Mail,
-                Phone= createContactDto.Phone,
-                OpenDays= createContactDto.OpenDays,
-                OpenDaysDescription= createContactDto.OpenDaysDescription,
-                OpenHours = createContactDto.OpenHours,
-            });
+            var value = _mapper.Map<Contact>(createContactDto);
+            _contactService.TAdd(value);
             return Ok("İletişim Bilgisi Eklendi");
         }
 
@@ -57,25 +49,13 @@ namespace TurkishLocalFlavorsApi.Controllers
         public IActionResult GetContact(int id)
         {
             var values = _contactService.TGetByID(id);
-            return Ok(values);
+            return Ok(_mapper.Map<GetContactDto>(values));
         }
         [HttpPut]
         public IActionResult UpdateContact(UpdateContactDto updateContactDto)
         {
-            _contactService.TUpdate(new Contact()
-            {
-               ContactID = updateContactDto.ContactID,
-               FooterDescription = updateContactDto.FooterDescription,
-               FooterTitle = updateContactDto.FooterTitle,
-               Location= updateContactDto.Location,
-               Mail = updateContactDto.Mail,
-               Phone= updateContactDto.Phone,
-               OpenDays= updateContactDto.OpenDays,
-               OpenDaysDescription = updateContactDto.OpenDaysDescription,
-               OpenHours= updateContactDto.OpenHours,   
-               
-
-            });
+            var value = _mapper.Map<Contact>(updateContactDto);
+            _contactService.TUpdate(value);
             return Ok("İletişim Bilgisi Güncellendi");
         }
     }

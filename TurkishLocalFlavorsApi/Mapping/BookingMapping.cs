@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using TurkishLocalFlavors.Dto.Booking;
+using TurkishLocalFlavors.Dto.BookingDto;
 using TurkishLocalFlavors.Entity.Entities;
 
 namespace TurkishLocalFlavorsApi.Mapping

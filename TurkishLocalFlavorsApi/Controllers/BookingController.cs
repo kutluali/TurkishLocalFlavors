@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TurkishLocalFlavors.Business.Abstract;
-using TurkishLocalFlavors.Dto.Booking;
+using TurkishLocalFlavors.Dto.BookingDto;
 using TurkishLocalFlavors.Entity.Entities;
 
 namespace TurkishLocalFlavorsApi.Controllers
@@ -11,66 +12,57 @@ namespace TurkishLocalFlavorsApi.Controllers
     public class BookingController : ControllerBase
     {
         private readonly IBookingService _bookingService;
+        private readonly IMapper _mapper;
 
-        public BookingController(IBookingService bookingService)
+        public BookingController(IBookingService bookingService, IMapper mapper)
         {
             _bookingService = bookingService;
+            _mapper = mapper;
         }
         [HttpGet]
         public IActionResult BookingList()
         {
             var values = _bookingService.TGetListAll();
-            return Ok (values);
+            return Ok(_mapper.Map<List<ResultBookingDto>>(values));
         }
-
-        [HttpPost]
+        [HttpPost("CreateBooking")]
         public IActionResult CreateBooking(CreateBookingDto createBookingDto)
         {
-            Booking booking = new Booking()
-            {
-                Mail=createBookingDto.Mail,
-                Date=createBookingDto.Date,
-                Name=createBookingDto.Name, 
-                PersonCount=createBookingDto.PersonCount,   
-                Phone=createBookingDto.Phone,
-                Description = createBookingDto.Description
-            };
-            _bookingService.TAdd(booking);
-            return Ok("Rezervasyon Alındı");
-
+           var value=_mapper.Map<Booking>(createBookingDto);
+            _bookingService.TAdd(value);
+            return Ok("Rezervasyon Yapıldı");
         }
-
         [HttpDelete("{id}")]
         public IActionResult DeleteBooking(int id)
         {
-            var values = _bookingService.TGetByID(id);
-            _bookingService.TDelete(values);
+            var value = _bookingService.TGetByID(id);
+            _bookingService.TDelete(value);
             return Ok("Rezervasyon Silindi");
-
         }
-
         [HttpPut]
         public IActionResult UpdateBooking(UpdateBookingDto updateBookingDto)
         {
-            Booking booking = new Booking()
-            {
-                Mail = updateBookingDto.Mail,
-                Date = updateBookingDto.Date,
-                Name = updateBookingDto.Name,
-                PersonCount = updateBookingDto.PersonCount,
-                Phone = updateBookingDto.Phone,
-                Description = updateBookingDto.Description
-            };
-            _bookingService.TUpdate(booking);
+            var value = _mapper.Map<Booking>(updateBookingDto);
+            _bookingService.TUpdate(value);
             return Ok("Rezervasyon Güncellendi");
         }
-
         [HttpGet("{id}")]
         public IActionResult GetBooking(int id)
         {
-            var values = _bookingService.TGetByID(id);
-            return Ok(values);
+            var value = _bookingService.TGetByID(id);
+            return Ok(_mapper.Map<GetBookingDto>(value));
         }
-
+        [HttpGet("BookingStatusApproved/{id}")]
+        public IActionResult BookingStatusApproved(int id)
+        {
+            _bookingService.TBookingStatusApproved(id);
+            return Ok("Rezervasyon Açıklaması Değiştirildi");
+        }
+        [HttpGet("BookingStatusCancelled/{id}")]
+        public IActionResult BookingStatusCancelled(int id)
+        {
+            _bookingService.TBookingStatusCancelled(id);
+            return Ok("Rezervasyon Açıklaması Değiştirildi");
+        }
     }
-}
+    }

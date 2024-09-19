@@ -28,14 +28,8 @@ namespace TurkishLocalFlavorsApi.Controllers
         [HttpPost]
         public IActionResult CreateTestimonial(CreateTestimonialDto createTestimonialDto)
         {
-            _testoimonialService.TAdd(new Testimonial()
-            {
-                Comment = createTestimonialDto.Comment,
-                ImageUrl = createTestimonialDto.ImageUrl,
-                Name = createTestimonialDto.Name,
-                Status = createTestimonialDto.Status,
-                Title = createTestimonialDto.Title
-            });
+            var values=_mapper.Map<Testimonial>(createTestimonialDto);
+            _testoimonialService.TAdd(values);
             return Ok("Müşteri Yorum Bilgisi Eklendi");
         }
         [HttpDelete("{id}")]
@@ -49,20 +43,13 @@ namespace TurkishLocalFlavorsApi.Controllers
         public IActionResult GetTestimonial(int id)
         {
             var value = _testoimonialService.TGetByID(id);
-            return Ok(value);
+            return Ok(_mapper.Map<GetTestimonialDto>(value));
         }
         [HttpPut]
         public IActionResult UpdateTestimonial(UpdateTestimonialDto updateTestimonialDto)
         {
-            _testoimonialService.TUpdate(new Testimonial()
-            {
-                Comment = updateTestimonialDto.Comment,
-                ImageUrl = updateTestimonialDto.ImageUrl,
-                Name = updateTestimonialDto.Name,
-                Status = updateTestimonialDto.Status,
-                Title = updateTestimonialDto.Title,
-                TestimonialID = updateTestimonialDto.TestimonialID
-            });
+            var values = _mapper.Map<Testimonial>(updateTestimonialDto);
+            _testoimonialService.TUpdate(values);
             return Ok("Müşteri Yorum Bilgisi Güncellendi");
         }
     }

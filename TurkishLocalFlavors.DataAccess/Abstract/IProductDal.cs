@@ -21,5 +21,6 @@ namespace TurkishLocalFlavors.DataAccess.Abstract
         decimal ProductPriceByMantı();
         decimal TotalPriceByDrinkCategory();
         decimal TotalPriceBySaladCategory();
+        List<Product> GetLast9Products();
     }
 }

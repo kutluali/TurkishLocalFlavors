@@ -15,7 +15,7 @@ namespace TurkishLocalFlavorsUI.Controllers
         public async Task<IActionResult> Index()
         {
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("https://localhost:7046/api/Contact/");
+            var responseMessage = await client.GetAsync("https://localhost:7046/api/Contact");
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();

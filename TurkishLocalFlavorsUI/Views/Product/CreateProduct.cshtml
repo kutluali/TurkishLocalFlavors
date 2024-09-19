@@ -10,32 +10,46 @@
         <div class="row">
             <div class="col-md-12">
                 <form method="post">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+
                     <div class="card">
                         <div class="card-header">
                             <div class="card-title">Yeni Ürün Girişi</div>
                         </div>
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="productname">Ürün Adını Giriniz</label>
-                                <input type="text" class="form-control" asp-for="ProductName" id="productname"><br />
-                                <label for="price">Ürün Fiyatını Giriniz</label>
-                                <input type="text" class="form-control" asp-for="Price" id="price"><br />
-                                <label for="imageurl">Ürün Görselini Giriniz</label>
-                                <input type="text" class="form-control" asp-for="ImageUrl" id="imageurl"><br />
-                                <label for="price">Ürün Kategorisini Seçiniz</label>
-                                @Html.DropDownListFor(x => x.CategoryID, (List<SelectListItem>)ViewBag.v, new { @class = "form-control" })<br />
-                                <label for="description">Ürün Açıklamasını Giriniz</label>
-                                <input type="text" class="form-control" asp-for="Description" id="description"><br />
+                                <label>Ürün Adını Giriniz</label>
+                                <input type="text" class="form-control" asp-for="ProductName" >
+                                <span asp-validation-for="ProductName" class="text-danger"></span><br />
 
-                                <label>Kategori Aktif mı ?</label><br />
+                                <label >Ürün Fiyatını Giriniz</label>
+                                <input type="text" class="form-control" asp-for="Price" >
+                                <span asp-validation-for="Price" class="text-danger"></span><br />
+
+                                <label for="imageurl">Ürün Görselini Giriniz</label>
+                                <input type="text" class="form-control" asp-for="ImageUrl" id="imageurl">
+                                <span asp-validation-for="ImageUrl" class="text-danger"></span><br />
+
+                                <label >Ürün Kategorisini Seçiniz</label>
+                                @Html.DropDownListFor(x => x.CategoryID, (List<SelectListItem>)ViewBag.v, new { @class = "form-control" })
+                                <span asp-validation-for="CategoryID" class="text-danger"></span><br />
+
+                                <label >Ürün Açıklamasını Giriniz</label>
+                                <input type="text" class="form-control" asp-for="Description">
+                                <span asp-validation-for="Description" class="text-danger"></span><br />
+
+                                <label>Kategori Aktif mi?</label><br />
                                 <label class="form-radio-label">
-                                    <input class="form-radio-input" type="radio" name="optionsRadios" asp-for="ProductStatus" value="true" checked="">
+                                    <input class="form-radio-input" type="radio" asp-for="ProductStatus" value="true" 
+ checked>
                                     <span class="form-radio-sign">Evet</span>
                                 </label>
                                 <label class="form-radio-label ml-3">
-                                    <input class="form-radio-input" type="radio" name="optionsRadios" asp-for="ProductStatus" value="false">
+                                    <input class="form-radio-input" type="radio" asp-for="ProductStatus" value="false" 
+>
                                     <span class="form-radio-sign">Hayır</span>
                                 </label>
+
                             </div>
                             <div class="card-action">
                                 <button class="btn btn-primary">Ürünü Ekle</button>

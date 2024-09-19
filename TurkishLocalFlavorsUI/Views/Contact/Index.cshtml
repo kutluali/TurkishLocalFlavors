@@ -3,7 +3,16 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-
+<head>
+	<style>
+	td {
+	max-width: 300px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	}
+	</style>
+</head>
 <div class="content">
 	<div class="container-fluid">
 		<h4 class="page-title">Ana Sayfa İletişim Bilgi İşlemleri</h4>
@@ -36,7 +45,8 @@
 								@foreach (var item in Model)
 								{
 									<tr>
-										<td>@item.Location</td>
+										<td style="word-wrap: break-word; max-width: 150px;">@item.Location</td>
+
 										<td>@item.Phone</td>
 										<td>@item.Mail</td>
 										<td>@item.FooterDescription</td>

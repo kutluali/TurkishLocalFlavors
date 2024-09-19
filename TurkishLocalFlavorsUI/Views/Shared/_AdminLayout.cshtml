@@ -1,15 +1,15 @@
 ﻿<!DOCTYPE html>
 <html>
-@await Component.InvokeAsync("_LayoutHeaderComponentPartial")
+<head>
+	@await Component.InvokeAsync("_LayoutHeaderComponentPartial")
+</head>
 <body>
 	<div class="wrapper">
 		@await Component.InvokeAsync("_LayoutNavbarComponentPartial")
 
 		@await Component.InvokeAsync("_LayoutSidebarComponentPartial")
 
-
 		<div class="main-panel">
-
 			@RenderBody()
 
 			@await Component.InvokeAsync("_LayoutFooterComponentPartial")

@@ -33,6 +33,11 @@ namespace TurkishLocalFlavors.Business.Concrete
             return _productDal.GetByID(id);
         }
 
+        public List<Product> TGetLast9Products()
+        {
+            return _productDal.GetLast9Products();
+        }
+
         public List<Product> TGetListAll()
         {
             return _productDal.GetListAll();

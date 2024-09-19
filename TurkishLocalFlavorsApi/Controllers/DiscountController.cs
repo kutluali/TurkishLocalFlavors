@@ -31,15 +31,8 @@ namespace TurkishLocalFlavorsApi.Controllers
         [HttpPost]
         public IActionResult CreateDiscount(CreateDiscountDto createDiscountDto)
         {
-            _discountService.TAdd(new Discount()
-            {
-                Amount = createDiscountDto.Amount,
-                Description = createDiscountDto.Description,
-                ImageUrl = createDiscountDto.ImageUrl,  
-                Status = createDiscountDto.Status,  
-                Title = createDiscountDto.Title
-
-            });
+            var value=_mapper.Map<Discount>(createDiscountDto);
+            _discountService.TAdd(value);  
             return Ok("İndirimli Ürün Eklendi");
         }
 
@@ -55,21 +48,33 @@ namespace TurkishLocalFlavorsApi.Controllers
         public IActionResult GetDiscount(int id)
         {
             var values = _discountService.TGetByID(id);
-            return Ok(values);
+            return Ok(_mapper.Map<GetDiscountDto>(values));
         }
         [HttpPut]
         public IActionResult UpdateDiscount(UpdateDiscountDto updateDiscountDto)
         {
-            _discountService.TUpdate(new Discount()
-            {
-                Amount=updateDiscountDto.Amount,
-                Description=updateDiscountDto.Description,
-                ImageUrl = updateDiscountDto.ImageUrl,
-                Title = updateDiscountDto.Title,
-                Status = updateDiscountDto.Status,  
-                DiscountID = updateDiscountDto.DiscountID
-            });
+            var value = _mapper.Map<Discount>(updateDiscountDto);
+            _discountService.TAdd(value);
             return Ok("İndirimli Ürün Güncellendi");
+        }
+        [HttpGet("ChangeStatusToTrue/{id}")]
+        public IActionResult ChangeStatusToTrue(int id)
+        {
+            _discountService.TChangeStatusToTrue(id);
+            return Ok("Ürün İndirimi Aktif Hale Getirildi");
+        }
+
+        [HttpGet("ChangeStatusToFalse/{id}")]
+        public IActionResult ChangeStatusToFalse(int id)
+        {
+            _discountService.TChangeStatusToFalse(id);
+            return Ok("Ürün İndirimi Pasif Hale Getirildi");
+        }
+
+        [HttpGet("GetListByStatusTrue")]
+        public IActionResult GetListByStatusTrue()
+        {
+            return Ok(_discountService.TGetListByStatusTrue());
         }
     }
 }

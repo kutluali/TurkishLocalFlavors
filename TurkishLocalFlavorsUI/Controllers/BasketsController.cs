@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using TurkishLocalFlavorsUI.Dtos.BasketDtos;
@@ -6,6 +7,7 @@ using TurkishLocalFlavorsUI.Dtos.ProductDtos;
 
 namespace TurkishLocalFlavorsUI.Controllers
 {
+    [AllowAnonymous]
     public class BasketsController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;

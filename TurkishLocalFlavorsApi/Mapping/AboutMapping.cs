@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using TurkishLocalFlavors.Dto.AboutDto;
+using TurkishLocalFlavors.Entity.Entities;
 
 namespace TurkishLocalFlavorsApi.Mapping
 {
@@ -7,10 +8,10 @@ namespace TurkishLocalFlavorsApi.Mapping
     {
         public AboutMapping()
         {
-            CreateMap<AboutMapping, ResultAboutDto>().ReverseMap();
-            CreateMap<AboutMapping, CreateAboutDto>().ReverseMap();
-            CreateMap<AboutMapping, GetAboutDto>().ReverseMap();
-            CreateMap<AboutMapping, UpdateAboutDto>().ReverseMap();
+            CreateMap<About, ResultAboutDto>().ReverseMap();
+            CreateMap<About, CreateAboutDto>().ReverseMap();
+            CreateMap<About, GetAboutDto>().ReverseMap();
+            CreateMap<About, UpdateAboutDto>().ReverseMap();
         }
     }
 }

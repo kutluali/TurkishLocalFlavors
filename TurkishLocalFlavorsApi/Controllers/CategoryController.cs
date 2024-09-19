@@ -46,11 +46,8 @@ namespace TurkishLocalFlavorsApi.Controllers
         [HttpPost]
         public IActionResult CreateCategory(CreateCategoryDto createCategoryDto)
         {
-            _categoryService.TAdd(new Category()
-            {
-                CategoryName = createCategoryDto.CategoryName,
-                Status = createCategoryDto.Status,
-            });
+            var value=_mapper.Map<Category>(createCategoryDto);
+            _categoryService.TUpdate(value);
             return Ok("Kategori Eklendi");
         }
 
@@ -66,18 +63,14 @@ namespace TurkishLocalFlavorsApi.Controllers
         public IActionResult GetCategory(int id)
         {
             var values = _categoryService.TGetByID(id);
-            return Ok(values);
+            return Ok(_mapper.Map<GetCategoryDto>(values));
         }
 
         [HttpPut]
         public IActionResult UpdateCategory(UpdateCategoryDto updateCategoryDto)
         {
-            _categoryService.TUpdate(new Category()
-            {
-                CategoryName = updateCategoryDto.CategoryName,
-                CategoryID = updateCategoryDto.CategoryID,
-                Status = updateCategoryDto.Status
-            });
+            var value = _mapper.Map<Category>(updateCategoryDto);
+            _categoryService.TUpdate(value);
             return Ok("Kategori Güncellendi");
         }
 
