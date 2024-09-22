@@ -54,7 +54,7 @@ namespace TurkishLocalFlavorsApi.Controllers
         public IActionResult UpdateDiscount(UpdateDiscountDto updateDiscountDto)
         {
             var value = _mapper.Map<Discount>(updateDiscountDto);
-            _discountService.TAdd(value);
+            _discountService.TUpdate(value);
             return Ok("İndirimli Ürün Güncellendi");
         }
         [HttpGet("ChangeStatusToTrue/{id}")]

@@ -111,22 +111,53 @@
     </div>
 
     <script>
-        function updateQuantity(basketId, newCount) {
-            if (newCount <= 0) return; // Ürün miktarının sıfırın altına inmesini engelle
+        <script>
+            function updateQuantity(basketId, change) {
+                // Mevcut adet değeri
+                const quantityInput = document.getElementById(`quantity-${basketId}`);
+                let newCount = parseInt(quantityInput.value) + change;
 
-            $.ajax({
-                type: "POST",
-                url: "/Baskets/UpdateQuantity",
-                data: { basketId: basketId, count: newCount },
-                success: function (response) {
-                    // Sepeti yeniden yüklemek için sayfayı yenileyebilir veya kısmi bir güncelleme yapabilirsiniz.
-                    location.reload();
-                },
-                error: function (error) {
-                    console.error("Ürün miktarı güncellenirken bir hata oluştu.", error);
+                if (newCount < 1) {
+                    alert("Ürün miktarı sıfırdan az olamaz.");
+                    return; // Ürün miktarının sıfırın altına inmesini engelle
                 }
+
+                // AJAX isteği
+                $.ajax({
+                    type: "POST",
+                    url: "/Baskets/UpdateQuantity",
+                    data: { basketId: basketId, count: newCount },
+                    success: function (response) {
+                        // Adet değerini güncelle
+                        quantityInput.value = newCount;
+
+                        // Sepet toplamını güncelle
+                        updateTotal();
+                    },
+                    error: function (error) {
+                        console.error("Ürün miktarı güncellenirken bir hata oluştu.", error);
+                    }
+                });
+            }
+
+        function updateTotal() {
+            let totalPrice = 0;
+            let totalItems = document.querySelectorAll("tbody tr");
+
+            totalItems.forEach(item => {
+                let price = parseFloat(item.querySelector("td:nth-child(4)").innerText);
+                let quantity = parseInt(item.querySelector("input[type='text']").value);
+                totalPrice += price * quantity;
             });
+
+            let tax = totalPrice * 0.10; // %10 KDV
+            let totalWithTax = totalPrice + tax;
+
+            document.getElementById("totalprice").innerText = totalPrice.toFixed(2);
+            document.getElementById("kdv").innerText = tax.toFixed(2);
+            document.getElementById("totalpricewithkdv").innerText = totalWithTax.toFixed(2);
         }
+    </script>
 
     </script>
 </body>

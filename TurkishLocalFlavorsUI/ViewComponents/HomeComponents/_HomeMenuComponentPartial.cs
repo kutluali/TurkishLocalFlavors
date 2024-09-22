@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using TurkishLocalFlavorsUI.Dtos.ProductDtos;
+
 namespace TurkishLocalFlavorsUI.ViewComponents.HomeComponents
 {
     public class _HomeMenuComponentPartial : ViewComponent

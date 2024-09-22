@@ -30,7 +30,10 @@
                             </select>
                         </div>
                         <div>
-                            <input type="date" class="form-control" id="dateTime" asp-for="Date">
+                            <div>
+                                <input type="datetime-local" class="form-control" id="dateTime" asp-for="Date">
+                            </div>
+
                         </div>
                         <div class="btn_box">
                             <button type="submit">Yerinizi Ayırtın</button>
@@ -40,7 +43,7 @@
             </div>
             <div class="col-md-6">
                 <div class="map_container">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d4012.9362025419346!2d29.006040189882242!3d41.10602130759506!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab5ce49432ab3%3A0xbf3b742cbd64169c!2sUNIQ%20Hall!5e0!3m2!1str!2str!4v1726697582856!5m2!1str!2str" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <iframe src="@ViewBag.location" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
         </div>

@@ -11,5 +11,6 @@ namespace TurkishLocalFlavors.Business.Abstract
     {
         List<Basket> TGetBasketByMenuTableNumber(int id);
 
+
     }
 }

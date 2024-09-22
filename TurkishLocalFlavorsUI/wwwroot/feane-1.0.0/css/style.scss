@@ -574,41 +574,41 @@ a:focus {
   }
 }
 
-// end food section
+// end food section.about_section {
+
 
 // about section
 .about_section {
-  background: $primary2;
-  color: $white;
+    background: #c5d6de;
+    color: #260e0e;
 
-  .row {
-    align-items: center;
-  }
-
-  .img-box {
-    position: relative;
-    display: flex;
-    justify-content: center;
-
-    img {
-      width: 100%;
-      max-width: 445px;
-      position: relative;
-      z-index: 2;
+    .row {
+        align-items: center;
     }
 
-  }
+    .img-box {
+        position: relative;
+        display: flex;
+        justify-content: center;
 
-  .detail-box {
-    p {
-      margin-top: 15px;
+        img {
+            width: 100%;
+            max-width: 445px;
+            position: relative;
+            z-index: 2;
+        }
     }
 
-    a {
-      @include hero_btn($primary1, $white, 10px, 45px, 45px);
-      margin-top: 15px;
+    .detail-box {
+        p {
+            margin-top: 15px;
+        }
+
+        a {
+            @include hero_btn($primary1, $white, 10px, 45px, 45px);
+            margin-top: 15px;
+        }
     }
-  }
 }
 
 // end about section

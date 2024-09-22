@@ -67,23 +67,6 @@ namespace TurkishLocalFlavorsApi.Controllers
             _basketService.TDelete(values);
             return Ok("Ürün Silindi");
         }
-
-        //[HttpPost]
-        //public IActionResult UpdateBasket(UpdateBasketDto updateBasketDto)
-        //{
-        //    using var context = new FlavorsContext();
-        //    _basketService.TUpdate(new Basket()
-        //    {
-        //        Count = 1,
-        //        BasketID = updateBasketDto.BasketID,
-        //        ProductID = updateBasketDto.ProductID,
-        //        MenuTableID = updateBasketDto.MenuTableID,
-        //        Price = context.Products.Where(x => x.ProductID == updateBasketDto.ProductID).Select(y => y.Price).FirstOrDefault(),
-        //        TotalPrice = 0,
-        //    });
-        //    return Ok(updateBasketDto);
-        //}
-
-        
-    }    
+    }
 }
+
