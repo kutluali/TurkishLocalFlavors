@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -41,6 +42,11 @@ namespace TurkishLocalFlavors.Business.Concrete
         public List<Product> TGetListAll()
         {
             return _productDal.GetListAll();
+        }
+
+        public decimal TGetProductPrice(int productId)
+        {
+            return _productDal.GetProductPrice(productId);
         }
 
         public List<Product> TGetProductsWithCategories()
@@ -102,5 +108,6 @@ namespace TurkishLocalFlavors.Business.Concrete
         {
             _productDal.Update(entity);
         }
+        
     }
 }

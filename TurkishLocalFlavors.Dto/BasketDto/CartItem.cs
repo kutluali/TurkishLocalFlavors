@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 namespace TurkishLocalFlavors.Dto.BasketDto
 {
-    public class UpdateQuantityDto
+    public class CartItem
     {
         public int BasketID { get; set; }
+        public string ProductName { get; set; }
+        public decimal Price { get; set; }
         public int Count { get; set; }
+        public decimal TotalPrice => Price * Count;
     }
 }

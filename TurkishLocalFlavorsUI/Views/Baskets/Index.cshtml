@@ -4,9 +4,9 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
     int count = 0;
-    decimal basketTotalPrice = 0;
-    decimal basketTotalPriceWithTax = 0;
-    decimal tax = 0;
+    decimal basketTotalPrice = Model.Sum(x => x.Price * x.Count);
+    decimal tax = basketTotalPrice * 0.10m;
+    decimal basketTotalPriceWithTax = basketTotalPrice + tax;
 }
 
 <body class="sub_page">
@@ -38,41 +38,41 @@
                             <th>Sil</th>
                         </tr>
                     </thead>
-                    @foreach (var item in Model)
-                    {
-                        basketTotalPrice = Model.Sum(x => x.Price);
-                        tax = basketTotalPrice / 100 * 10;
-                        basketTotalPriceWithTax = basketTotalPrice + tax;
-                        count++;
-                        <tbody class="align-middle">
-                            <tr>
+                    <tbody class="align-middle">
+                        @foreach (var item in Model)
+                        {
+                            count++;
+                            <tr data-id="@item.BasketID">
                                 <td class="align-middle">@count</td>
                                 <td class="align-middle">@item.ProductName</td>
                                 <td class="align-middle">
                                     <div class="input-group quantity mx-auto" style="width: 110px;">
                                         <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-danger btn-minus" onclick="updateQuantity(@item.BasketID, @item.Count - 1)">
+                                            <button class="btn btn-sm btn-danger btn-minus" onclick="updateQuantity(@item.BasketID, -1)">
                                                 <i class="fa fa-minus"></i>
                                             </button>
                                         </div>
                                         <input type="text" class="form-control form-control-sm bg-white border text-center" value="@item.Count" id="quantity-@item.BasketID" style="width: 40px;">
                                         <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-success btn-plus" onclick="updateQuantity(@item.BasketID, @item.Count + 1)" style="margin-left: -1px;">
+                                            <button class="btn btn-sm btn-success btn-plus" onclick="updateQuantity(@item.BasketID, 1)" style="margin-left: -1px;">
                                                 <i class="fa fa-plus"></i>
                                             </button>
                                         </div>
                                     </div>
                                 </td>
-
-                                <td class="align-middle">@item.Price</td>
-                                <td class="align-middle">@item.TotalPrice</td>
-                                <td class="align-middle btn-delete"><a class="btn btn-sm btn-danger" href="/Baskets/DeleteBasket/@item.BasketID"><i class="fa fa-times"></i></a></td>
+                                <td class="align-middle">@item.Price.ToString("F2")</td>
+                                <td class="align-middle" id="total-@item.BasketID">@((item.Price * item.Count).ToString("F2"))</td>
+                                <td class="align-middle btn-delete">
+                                    <a class="btn btn-sm btn-danger" href="/Baskets/DeleteBasket/@item.BasketID">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                </td>
                             </tr>
-                        </tbody>
-                    }
+                        }
+                    </tbody>
                 </table>
             </div>
-            <div class="col-log-4">
+            <div class="col-lg-4">
                 <form>
                     <div class="input-group">
                         <input type="text" id="couponcode" class="form-control border-1 p-4" placeholder="Kupon Kodunuz" />
@@ -89,18 +89,18 @@
                     <div id="container" class="border-bottom pb-2 px-3 py-2">
                         <div class="d-flex justify-content-between mb-6">
                             <h6 class="px-2">Toplam Tutar</h6>
-                            <h6 class="px-2"><span id="totalprice">@basketTotalPrice</span>₺</h6>
+                            <h6 class="px-2"><span id="totalprice">@basketTotalPrice.ToString("F2")</span><span class="currency">₺</span></h6>
                         </div>
                         <div class="d-flex justify-content-between px-2">
-                            <h6 class="font-weight-medium">Kdv Oranı</h6>
-                            <h6 id="kdv" class="font-weight-medium">@tax</h6>₺
+                            <h6 class="font-weight-medium">KDV Oranı</h6>
+                            <h6 id="kdv" class="font-weight-medium">@tax.ToString("F2")<span class="currency">₺</span></h6>
                         </div>
                         <br />
                     </div>
                     <div class="pt-2 px-3 py-2">
                         <div class="d-flex justify-content-between mt-2">
-                            <h5 class="px-2">Toplam Tutar</h5>
-                            <h5 class="px-2"><span id="totalpricewithkdv">@basketTotalPriceWithTax</span>₺</h5>
+                            <h5 class="px-2">KDV Dahil Tutar</h5>
+                            <h5 class="px-2"><span id="totalpricewithkdv">@basketTotalPriceWithTax.ToString("F2")</span>₺<span class="currency"></span></h5>
                         </div>
                         <br />
                         <button id="btnchecked" class="btn btn-block btn-warning font-weight-bold my-3">Siparişi Tamamla</button>
@@ -110,54 +110,78 @@
         </div>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        <script>
-            function updateQuantity(basketId, change) {
-                // Mevcut adet değeri
-                const quantityInput = document.getElementById(`quantity-${basketId}`);
-                let newCount = parseInt(quantityInput.value) + change;
+        function updateQuantity(basketId, change) {
+            const quantityInput = document.getElementById(`quantity-${basketId}`);
+            let newCount = parseInt(quantityInput.value) + change;
 
-                if (newCount < 1) {
-                    alert("Ürün miktarı sıfırdan az olamaz.");
-                    return; // Ürün miktarının sıfırın altına inmesini engelle
-                }
-
-                // AJAX isteği
-                $.ajax({
-                    type: "POST",
-                    url: "/Baskets/UpdateQuantity",
-                    data: { basketId: basketId, count: newCount },
-                    success: function (response) {
-                        // Adet değerini güncelle
-                        quantityInput.value = newCount;
-
-                        // Sepet toplamını güncelle
-                        updateTotal();
-                    },
-                    error: function (error) {
-                        console.error("Ürün miktarı güncellenirken bir hata oluştu.", error);
-                    }
-                });
+            if (newCount < 1) {
+                alert("Ürün miktarı sıfırdan az olamaz.");
+                return;
             }
 
-        function updateTotal() {
-            let totalPrice = 0;
-            let totalItems = document.querySelectorAll("tbody tr");
+            // Butonları seç
+            const minusButton = document.querySelector(`button[onclick="updateQuantity(${basketId}, -1)"]`);
+            const plusButton = document.querySelector(`button[onclick="updateQuantity(${basketId}, 1)"]`);
 
-            totalItems.forEach(item => {
-                let price = parseFloat(item.querySelector("td:nth-child(4)").innerText);
-                let quantity = parseInt(item.querySelector("input[type='text']").value);
-                totalPrice += price * quantity;
+            // Butonların null olup olmadığını kontrol et
+            if (minusButton) {
+                minusButton.disabled = true;
+            }
+            if (plusButton) {
+                plusButton.disabled = true;
+            }
+
+            // AJAX isteği
+            $.ajax({
+                type: "POST",
+                url: "/api/Basket/UpdateQuantity",
+                contentType: "application/json",
+                data: JSON.stringify({ basketId: basketId, count: newCount }),
+                success: function (response) {
+                    quantityInput.value = newCount;
+                    updateTotal(basketId, newCount); // Toplamı güncelle
+                },
+                error: function (error) {
+                    alert("Ürün miktarı güncellenirken bir hata oluştu.");
+                    console.error("Hata:", error);
+                },
+                complete: function () {
+                    if (minusButton) {
+                        minusButton.disabled = false;
+                    }
+                    if (plusButton) {
+                        plusButton.disabled = false;
+                    }
+                }
             });
+        }
 
-            let tax = totalPrice * 0.10; // %10 KDV
-            let totalWithTax = totalPrice + tax;
+        function updateTotal(basketId, newCount) {
+            const price = parseFloat(document.querySelector(`tr[data-id="${basketId}"] td:nth-child(4)`).innerText);
+            const totalCell = document.getElementById(`total-${basketId}`);
+            const newTotal = price * newCount;
 
-            document.getElementById("totalprice").innerText = totalPrice.toFixed(2);
+            totalCell.innerText = newTotal.toFixed(2); // Toplam hücresini güncelle
+
+            let overallTotal = Array.from(document.querySelectorAll("tbody tr")).reduce((total, item) => {
+                const itemTotal = parseFloat(item.querySelector("td:nth-child(5)").innerText);
+                return total + itemTotal;
+            }, 0);
+
+            const tax = overallTotal * 0.10;
+            const totalWithTax = overallTotal + tax;
+
+            document.getElementById("totalprice").innerText = overallTotal.toFixed(2);
             document.getElementById("kdv").innerText = tax.toFixed(2);
             document.getElementById("totalpricewithkdv").innerText = totalWithTax.toFixed(2);
         }
     </script>
-
-    </script>
+    <style>
+        .currency {
+            display: inline;
+            margin-left: 4px;
+        }
+    </style>
 </body>

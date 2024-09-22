@@ -17,14 +17,13 @@ namespace TurkishLocalFlavorsApi.Controllers
     public class BasketController : ControllerBase
     {
         private readonly IBasketService _basketService;
-
+        private static List<CartItem> CartItems = new List<CartItem>();
         public BasketController(IBasketService basketService)
         {
             _basketService = basketService;
         }
-
         [HttpGet]
-        public ActionResult GetBasketByMenuTableID(int id)
+        public IActionResult GetBasketByMenuTableID(int id)
         {
             var values = _basketService.TGetBasketByMenuTableNumber(id);
             return Ok(values);
@@ -46,26 +45,43 @@ namespace TurkishLocalFlavorsApi.Controllers
             return Ok(values);
         }
         [HttpPost]
-        public IActionResult CreateBasket(CreateBasketDto createbasketDto)
+        public IActionResult CreateBasket(CreateBasketDto createBasketDto)
         {
-            using var context =new FlavorsContext();
+            //Bahçe 01 --> 45
+            using var context = new FlavorsContext();
             _basketService.TAdd(new Basket()
             {
+                ProductID = createBasketDto.ProductID,
                 Count = 1,
-                ProductID = createbasketDto.ProductID,
-                MenuTableID = createbasketDto.MenuTableID,
-                Price = context.Products.Where(x => x.ProductID == createbasketDto.ProductID).Select(y =>y.Price).FirstOrDefault(),
-                TotalPrice=0,
+                MenuTableID = 4,
+                Price = context.Products.Where(x => x.ProductID == createBasketDto.ProductID).Select(y => y.Price).FirstOrDefault(),
+                TotalPrice = 0
             });
-            return Ok(createbasketDto);
+            return Ok();
+        }
+        [HttpDelete("{id}")]
+        public IActionResult DeleteBasket(int id)
+        {
+            var value = _basketService.TGetByID(id);
+            _basketService.TDelete(value);
+            return Ok("Sepetteki Seçilen Ürün Silindi");
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult DeleteCategory(int id)
+        [HttpPost("UpdateQuantity")]
+        public ActionResult UpdateQuantity([FromBody] UpdateQuantityDto updateDto)
         {
-            var values = _basketService.TGetByID(id);
-            _basketService.TDelete(values);
-            return Ok("Ürün Silindi");
+            var existingItem = CartItems.FirstOrDefault(i => i.BasketID == updateDto.BasketID);
+            if (existingItem != null)
+            {
+                existingItem.Count = updateDto.Count;
+
+                // Eğer miktar 0 veya daha azsa ürünü sepetten çıkar
+                if (existingItem.Count <= 0)
+                {
+                    CartItems.Remove(existingItem);
+                }
+            }
+            return Ok(CartItems);
         }
     }
 }

@@ -32,7 +32,8 @@
                                             <h6>
                                                 @item.Price₺
                                             </h6>
-                                            <a href="#" onclick="showProduct('@item.ProductName', @item.ProductID)">
+                                            <a href="#" onclick="showproductid(@item.ProductID, '@item.ProductName')">
+
                                                 <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
                                                 <g>
                                                 <g>
@@ -102,21 +103,25 @@
         </div>
     </section>
 
-
     <script>
-        function showProduct(productName, productId) {
+        function showproductid(productId, productName) {
             $.ajax({
                 type: 'POST',
-                data: { item: productId },
-                contentType: 'json',
+                url: "/Menu/AddBasket/" + productId,
+                data: JSON.stringify({ item: productId }),  // JSON formatında productId'yi gönderiyoruz
+                contentType: 'application/json',  // contentType doğru ayarlandı
                 success: function () {
-                    swal(productName, "Sepete Eklendi", "success");
+                    swal(productName, "Seçtiğiniz Ürün Sepete Eklendi!", "success");  // Ürün adını gösteriyoruz
+                },
+                error: function (xhr, status, error) {
+                    console.log("Error:", xhr.responseText);  // Hata durumunda mesajı konsola yazdır
+                    swal("Hata", "Ürün sepete eklenemedi!", "error");
                 }
             });
-        }
-
-
-
+        };
     </script>
+
+
+
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </body>

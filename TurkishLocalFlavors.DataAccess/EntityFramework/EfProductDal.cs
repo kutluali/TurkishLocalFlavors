@@ -93,5 +93,15 @@ namespace TurkishLocalFlavors.DataAccess.EntityFramework
             int id = context.Categories.Where(x => x.CategoryName == "Salata").Select(y => y.CategoryID).FirstOrDefault();
             return context.Products.Where(x => x.CategoryID == id).Sum(y => y.Price);
         }
+        public decimal GetProductPrice(int productId)
+        {
+            using (var context = new FlavorsContext())
+            {
+                var product = context.Products
+                    .FirstOrDefault(p => p.ProductID == productId); // 'ProductID' kullanın
+                return product != null ? product.Price : 0;
+            }
+        }
+
     }
 }
