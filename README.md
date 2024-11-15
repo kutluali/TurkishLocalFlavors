@@ -3,7 +3,7 @@
 
 Bir İşletmenin Siparişlerini Anlık olarak Alıp Yönetip işleyebileceği bir Dinamik Web Application Projesi
 
-Ayrıca Projemizde Komilerin Masa İşlemlerini Yapabileceği Boş dolu olarak gösterebilceği bir ekranda bulunmakta.
+Ayrıca Projemizde Komilerin Masa İşlemlerini Yapabileceği Boş dolu olarak gösterebileceği bir ekranda bulunmakta.
 
 
 
